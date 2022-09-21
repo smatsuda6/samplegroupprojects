@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="userPage">
+  <h2>{{Profile.user_handle}}</h2>
+
+<ul>
+  <li>{{Profile.first_name}}</li>
+  <li>{{Profile.last_name}}</li>
+  <li>{{Profile.user_email}}</li>
+  <li>{{Profile.user_handle}}</li>
+  <li>{{Profile.bio_text}}</li>
+  <li>{{Profile.date_joined}}</li>
+</ul>
+
+
+</div>
+
+{% endblock %}
+\

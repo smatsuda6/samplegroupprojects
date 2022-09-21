@@ -1,0 +1,37 @@
+{% extends "studentskillsharing/base.html" %}
+{% block content %}
+<h5>Privacy Settings -- You can always come back to these later under the "Privacy Settings" tab of your menu.</h5>
+
+<form method="post">
+<div class="card" style="margin-bottom: 20px;">
+          <div class="card-header" style="margin-bottom: 10px;">
+            Show my student ID / email to:
+          </div>
+            <label class="radio-inline">
+              <input type="radio" name="showmyid" value="all" style="margin-left: 10px" checked>  All who search for me --
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="showmyid" value="most" style="margin-left: 10px">  Only those that I follow --
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="showmyid" value="none" style="margin-left: 10px">  No one
+            </label>
+</div>
+
+<div class="card" style="margin-bottom: 20px;">
+          <div class="card-header" style="margin-bottom: 10px;">
+            Allow posts to be searchable by:
+          </div>
+            {% csrf_token %}
+            <label class="radio-inline">
+              <input type="radio" name="searchmyposts" value="all" style="margin-left: 10px" checked>  All who search for my posts --
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="searchmyposts" value="most" style="margin-left: 10px">  Only those I follow
+            </label>
+</div>
+    <button name="settings-submit" type="submit" class="btn btn-primary">
+        Next Step
+    </button>
+</form>
+{% endblock %}

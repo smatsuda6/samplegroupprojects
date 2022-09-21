@@ -1,0 +1,16 @@
+
+footer {
+  font-size: 80%;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
+form button{
+  position:absolute;
+  left:80%;
+  top:0;
+}

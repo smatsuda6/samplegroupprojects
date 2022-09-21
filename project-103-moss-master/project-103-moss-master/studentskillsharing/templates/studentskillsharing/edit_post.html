@@ -1,0 +1,30 @@
+{% extends 'studentskillsharing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'posts' %}">Posts</a></li>
+  <li class="breadcrumb-item active"><a href="{{ post.get_absolute_url }}">{{ post.post_title }}</a> </li>
+  <li class="breadcrumb-item active">Edit Post</li>
+{% endblock %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+  <div class="card" style="background-color: #E0E0E0">
+    <div class="card-body">
+        <h2>Edit - {{ post.post_title }}</h2>
+        <hr>
+        <br>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-primary" type=submit"> Submit Edit</button>
+        </form>
+    </div>
+  </div>
+</div>
+<br>
+
+{% endblock %}

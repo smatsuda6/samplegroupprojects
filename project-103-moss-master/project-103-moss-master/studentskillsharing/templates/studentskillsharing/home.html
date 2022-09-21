@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="homePage">
+  <div class="homeTitle col-md-6">
+    <h1>(Body of Home Page) </h1>
+  </div>
+  {% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+  <div class="homeDescription col-md-12">
+    <p>(This is where we can talk about what this site is in more depth and list all the services that we are offering at the site.)</p>
+    <p>(This is also where we list the links to pages)</p>
+    <!-- <p> <a href="{% url 'shoeHomePage' %}"> Shoe Page</a> </p>
+    <p> <a href="{% url 'userHomePage' %}"> User Page</a> </p>
+    <p> <a href="{% url 'transactionHomePage' %}"> Transaction Page</a> </p>
+    <p> <a href="{% url 'inventoryHomePage' %}"> Inventory Page</a> </p> EXAMPLE -->
+  </div>
+</div>
+
+{% endblock %}

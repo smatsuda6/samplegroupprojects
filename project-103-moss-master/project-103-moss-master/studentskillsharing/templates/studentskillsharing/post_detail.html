@@ -1,0 +1,119 @@
+{% extends "studentskillsharing/base.html" %}
+{% load static %}
+
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'posts' %}">Posts</a></li>
+  <li class="breadcrumb-item active">{{ post.post_title }}</li>
+{% endblock %}
+
+
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/like_button.css' %}">
+
+
+
+<br>
+<div class="card border-success" style="background-color: #E0E0E0">
+    <div class="card-header">
+        <h1>
+            {{ post.post_title }}
+        </h1>
+    </div>
+
+  <div class="card-body">
+
+        <p class="card-text" style="font-size:26px;">{{ post.post_text }}</p>
+        <br>
+             <footer>
+                <a class="button button-like {{ like_status }} alignleft" href="{% url 'like_post' post.id %}">
+                    Like Post: {{ post.num_likes }}
+                </a>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                    <a href="{{ post.author.get_absolute_url }}">{{ post.author.first_name }} {{ post.author.last_name }}</a>
+                    {% if post.is_edited %}
+                        |    Published: {{post.date_published|timesince}} ago | Edited {{post.date_last_modified|timesince}} ago
+                    {% else %}
+                        | Published: {{post.date_published|timesince}} ago
+                    {% endif %}
+                    {% if post.author == request.user %}
+                         | <a href="{% url 'post_edit' post.id %}">Edit Post</a>
+                         | <a href="{% url 'post_delete' post.id %}">Delete Post</a>
+                    {% endif %}
+             </footer>
+
+
+
+  </div>
+</div>
+    <br>
+
+<br>
+{% if comments %}
+    <div class="card" style="background-color: #E0E0E0">
+            <div class="card-body">
+                <h3> Comments </h3>
+            </div>
+    </div>
+{% endif %}
+
+{% for comment in comments %}
+    <br>
+    <div class="card" style="background-color: #E0E0E0">
+        <div class="card-body">
+
+            <p style="font-size:18px;"> {{ comment.comment_text }} </p>
+            <footer>
+                <a href="{{ comment.author.get_absolute_url }}">{{ comment.author.first_name }} {{ comment.author.last_name }}</a> |
+                {{ comment.date_published|timesince }} ago
+                {% if comment.author == request.user %}
+                   | <a href="{% url 'comment_delete' comment.id %}"> delete </a>
+                {% endif %}
+            </footer>
+            {% for child in comment.children %}
+            <br>
+            <div class="card" style="background-color: #D3D3D3">
+                <div class="card-body">
+
+                    <p style="font-size:18px;"> {{ child.comment_text }} </p>
+                    <footer>
+                        <a href="{{ child.author.get_absolute_url }}">{{ child.author.first_name }} {{ child.author.last_name }}</a> |
+                        {{ child.date_published|timesince }} ago
+                         {% if child.author == request.user %}
+                            | <a href="{% url 'comment_delete' child.id %}"> delete </a>
+                        {% endif %}
+                    </footer>
+                </div>
+            </div>
+            {% endfor %}
+            <br>
+            <div class="col-md-12">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ reply_comment_form.as_p }}
+                    <button class="btn btn-primary" type=submit"> Post Comment</button>
+                    <input type="hidden" name=parent_id value='{{ comment.id }}'>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+
+
+    <div class="col-md-12">
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button class="btn btn-primary" type=submit" name="parent_comment"> Post Comment</button>
+        </form>
+    </div>
+    <br>
+    <br>
+
+
+{% endblock %}

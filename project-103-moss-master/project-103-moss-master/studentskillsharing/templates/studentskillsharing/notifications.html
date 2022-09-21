@@ -1,0 +1,36 @@
+{% extends "studentskillsharing/base.html" %}
+
+{% block content %}
+<h1>Your notifications</h1>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Message</th>
+        <th>When</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if unread_notifications_list %}
+      {% for unread_notification in unread_notifications_list %}
+        <tr class="table-success">
+          <td class="align-middle table-success"><a href="{{ unread_notification.action_object.get_absolute_url }}">{{ unread_notification.verb }}</a></td>
+          <td class="align-middle table-success">{{ unread_notification.timesince }} ago</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+    <p style="visibility:hidden">{{ unread_notifications_list.mark_all_as_read}}</p>
+    {% endif %}
+    {% if read_notifications_list %}
+      {% for read_notification in read_notifications_list %}
+        <tr>
+          <td class="align-middle"><a href="{{ read_notification.action_object.get_absolute_url }}">{{ read_notification.verb }}</a></td>
+          <td class="align-middle">{{ read_notification.timesince }} ago</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+    {% endif %}
+    {% if unread_notifications_list is None %} {% if read_notifications_list is None %}<td class="align-middle">No notifications to show.</td>{% endif %}{% endif %}
+
+    </tbody>
+  </table>
+{% endblock %}

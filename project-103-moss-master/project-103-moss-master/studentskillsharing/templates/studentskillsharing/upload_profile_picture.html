@@ -1,0 +1,23 @@
+{% extends 'studentskillsharing/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'profile' user.username %}">Posts</a></li>
+  <li class="breadcrumb-item active">Upload Profile Picture</li>
+{% endblock %}
+
+{% block content %}
+      <div class="card" style="background-color: #E0E0E0">
+        <div class="card-body">
+          <h2>Upload a Profile Picture</h2>
+          <hr>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+              <br>
+            <button class="btn btn-primary" type=submit">Upload Picture</button>
+          </form>
+        </div>
+   </div>
+{% endblock %}

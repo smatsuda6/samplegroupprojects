@@ -1,0 +1,41 @@
+{% load static %}
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title>Home - Student Skill Sharing</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    </head>
+
+    <body class="wide">
+        <div id="page" class="hfeed site">
+        <header>
+            <div class="header">
+                <div id="header-text" class="">
+                    <h1 id="site-title">
+                        <a href="/" title="Home - Student Skill Sharing App" rel="home">MOSS: Student Skill Sharing</a>
+                    </h1>
+                </div>
+            </div>
+        </header>
+        <hr>
+        <div class="main-wrapper">
+
+
+                <!-- THIS IS WHERE EACH HTML FILE THAT EXTENDS BASE.HTML BEGINS -->
+            {% block content %}
+            {% endblock %}
+                <!-- THIS IS WHERE EACH HTML FILE THAT EXTENDS BASE.HTML ENDS -->
+
+            <!-- <div class="footer">
+              <footer id="colophon">
+                  <div class="inner-wrap">
+                      (Footer for each page)
+                  </div>
+              </footer>
+            </div> -->
+
+        </div>
+    <!-- <script src = "{% static 'main.js' %}"></script> -->
+    </body>
+</html>

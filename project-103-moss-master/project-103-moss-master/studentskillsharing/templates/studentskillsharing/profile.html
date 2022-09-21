@@ -1,0 +1,92 @@
+{% extends "studentskillsharing/base.html" %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item">Profiles</li>
+  <li class="breadcrumb-item active">{{ requested_profile.first_name }} {{ requested_profile.last_name }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="card col-sm-3 text-left" style="width:10rem;border:none;">
+     {% if profile_picture_url %}
+        <img class="card-img-top rounded-circle" src="{{ profile_picture_url }}" style="height:200px;width:200px">
+     {% else %}
+         <img class="card-img-top rounded-circle" src="{{ requested_profile.photo_url }}" style="height:200px;width:200px">
+     {% endif %}
+    <br>
+     <h5 class="card-title">{{ requested_profile.first_name }} {{ requested_profile.last_name }}</h5>
+
+     <h6 class="card-subtitle mb-2 text-muted">{% if requested_profile.profile_showall is True %}{{ requested_profile.email }}{% elif requested_profile.profile_showmost is True %}{% if requested_profile in followed_by %}{{ requested_profile.email }}{% endif %}{% else %} Private {% endif %}</h6>
+    <p class="inline"> <b id="followers">{{ followers }} Followers</b> / <b>{{ following }} Following</b></p>
+    {% if is_users_profile is not True %}
+        <br><button id ="connect" data-profileid="{{requested_profile.username}}" class="{% if user_follow_status is False %}btn btn-outline-success{%else%}btn btn-success{%endif%}" type="button">
+            {% if user_follow_status is False %}Follow{%else%}Unfollow{%endif%}
+        </button>
+    {% else %}
+        <br>
+        <a href="{% url 'upload_profile_picture' requested_profile.username %}" class="btn btn-success">Upload Profile Picture </a>
+    {% endif %}
+</div>
+
+
+<div class="col">
+<h1>{{ requested_profile.first_name }}'s posts
+    {% if is_users_profile is not True %}
+    -
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ requested_profile.email }}" target="_blank" class="btn btn-success">
+         Email {{ requested_profile.first_name }}
+     </a>
+    {% endif %}
+</h1>
+
+    <br>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Post</th>
+        <th>Likes</th>
+        <th>Published On</th>
+          {% if is_users_profile %}
+          <th>
+              <a class="btn btn-success" href="/studentskillsharing/posts/new/">Create a Post</a>
+          </th>
+          {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+    {% if user_posts %}
+      {% for post in user_posts %}
+        <tr>
+         <td style="word-wrap:break-word;max-width:271.2;">
+            <a href="{{ post.get_absolute_url }}">{{ post.post_title }}</a>
+            <small class="text-muted d-block">{{ post.post_text }}</small>
+          </td>
+          <td class="align-middle">{{ post.num_likes }} </td>
+          <td class="align-middle">{{ post.date_published }}</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+    {% else %}
+    <td class="align-middle">No posts to show. {% if is_users_profile %}<a href="/studentskillsharing/posts/new">Create a post</a> to get started!{%endif%}</td>
+    {% endif %}
+    </tbody>
+  </table>
+</div>
+
+    <div class="card" style="width:18rem;margin-bottom:20px;">
+        <div class="card-header">Skills{% if is_users_profile %}<a class="btn btn-success" href="{% url 'edit_skills' %}" style="margin-left:7rem;" role="button">Edit Skills</a>{%endif%}</div>
+
+        {% if skill_qs %}
+    {% for skill in skill_qs %}
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ skill.skill_title }}</li>
+          </ul>
+    {% endfor %}
+        {% else %}
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">No skills specified. {% if is_users_profile %}<a href="/studentskillsharing/skills">Add some</a> to connect with other students!{%endif%}</td></li>
+          </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

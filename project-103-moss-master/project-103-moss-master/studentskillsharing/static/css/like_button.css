@@ -1,0 +1,76 @@
+ /*
+    https://foundation.zurb.com/building-blocks/blocks/button-like.html
+ */
+
+.button-like {
+  border: 2px solid #CD5C5C;
+  background-color: #C0C0C0;
+  text-decoration: none;
+  padding: .25rem;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #000000;
+  transition: all ease 0.4s;
+}
+
+.button-like span {
+  margin-left: 0.5rem;
+}
+
+.button-like .fa,
+.button-like span {
+  transition: all ease 0.4s;
+}
+
+.button-like:focus {
+  background-color: transparent;
+}
+
+.button-like:focus .fa,
+.button-like:focus span {
+  color: #8a8a8a;
+}
+
+.button-like:hover {
+  border-color: #cc4b37;
+  background-color: #2e8b57;
+}
+
+.button-like:hover .fa,
+.button-like:hover span {
+  color: #cc4b37;
+}
+
+.liked {
+  background-color: #3CB371;
+  border-color: #3CB371;
+}
+
+.liked .fa,
+.liked span {
+  color: #fefefe;
+}
+
+.liked:focus {
+  background-color: #3CB371;
+}
+
+.liked:focus .fa,
+.liked:focus span {
+  color: #fefefe;
+}
+
+.liked:hover {
+  background-color: ##3CB371;
+  border-color: #2e8b57;
+}
+
+.liked:hover .fa,
+.liked:hover span {
+  color: #3CB371;
+}
+
+

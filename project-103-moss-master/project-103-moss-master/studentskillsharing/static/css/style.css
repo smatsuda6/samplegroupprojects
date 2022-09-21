@@ -1,0 +1,37 @@
+h1, h2, h3, h4, p, div {
+    font-family: Helvetica, sans-serif;
+    /* color: #ffffff; */
+    /* color: #4A4A4A; */
+}
+
+h2 {
+    font-weight: bolder;
+}
+
+html {
+    height: 100%;
+}
+
+a:link {
+    color: green;
+}
+
+a:visited {
+    color: MediumSeaGreen;
+}
+
+label {
+    font-weight: bolder;
+}
+
+body {
+    background-color: #000000;
+    height: 100%;
+}
+
+.homePage {
+    background-color: powderblue;
+    margin: 20px;
+    padding: 20px;
+}
+

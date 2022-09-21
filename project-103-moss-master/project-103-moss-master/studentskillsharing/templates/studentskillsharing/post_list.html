@@ -1,0 +1,60 @@
+{% extends "studentskillsharing/base.html" %}
+
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">Posts</li>
+  <ul class="pull-right">
+  <li class="pull-right">
+      <div class="dropdown">
+          <button class="btn btn-sm btn-secondary dropdown-toggle pull-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{% url 'sort_by_newest' %}">Newest Posts</a>
+            <a class="dropdown-item" href="{% url 'sort_by_oldest' %}">Oldest Posts</a>
+              <a class="dropdown-item" href="{% url 'sort_by_top' %}">Likes (high to low)</a>
+            <a class="dropdown-item" href="{% url 'sort_by_bottom' %}">Likes (low to high)</a>
+          </div>
+
+      </div>
+  </li>
+  </ul>
+{% endblock %}
+
+{% block content %}
+
+   <div class="text-right">
+  </div>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Post</th>
+          <th>Author</th>
+        <th>Likes</th>
+        <th>Published</th>
+        <th>
+            <a class="btn btn-success" href="{% url 'post_new' %}">Create a Post</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if post_list %}
+      {% for post in post_list %}
+        <tr>
+         <td style="word-wrap:break-word;max-width:547.2;">
+            <a href="{{ post.get_absolute_url }}">{{ post.post_title }}</a>
+            <small class="text-muted d-block">{{ post.post_text }}</small>
+          </td>
+            <td class="align-middle"><a href="{{ post.author.get_absolute_url }}"> {{ post.author.first_name }} {{ post.author.last_name }}</a></td>
+          <td class="align-middle">{{ post.num_likes }} </td>
+          <td class="align-middle">{{ post.date_published|timesince }} ago</td>
+          <td class="align-middle">{{ post.date_published }}</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+    {% else %}
+    <td class="align-middle">No posts to show.</td>
+    {% endif %}
+    </tbody>
+  </table>
+{% endblock %}

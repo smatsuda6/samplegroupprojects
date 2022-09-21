@@ -1,0 +1,13 @@
+<p>Profiles containing '{{query_string}}'</p>
+{% if profiles %}
+    {% for profile in profiles %}
+        <div>
+            <div class="post">
+                {{ profile }}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+<h1>No Results.</h1>
+{% endif %}
+

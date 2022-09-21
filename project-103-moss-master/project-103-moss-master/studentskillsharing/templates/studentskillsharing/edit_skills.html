@@ -1,0 +1,29 @@
+{% extends "studentskillsharing/base.html" %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% for school in schools %}
+    <div class="card" style="margin-bottom:20px;">
+        <div class="card-header">
+            {{ school }}
+        </div>
+    {% for skill in skills %}
+        {% if skill.skill_school == school %}
+            <label style="margin-left:10px;margin-top:5px;font-size:24px;">
+                <input type="checkbox" name="skillchoice" value="{{skill.skill_title}}">  {{ skill.skill_title }}
+            </label>
+        {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
+    <button type="submit" name="skills-add" class="btn btn-success">
+        Add Selected Skills
+    </button>
+
+    <button type="submit" name="skills-remove" class="btn btn-danger">
+        Remove Selected Skills
+    </button>
+
+</form>
+{% endblock %}

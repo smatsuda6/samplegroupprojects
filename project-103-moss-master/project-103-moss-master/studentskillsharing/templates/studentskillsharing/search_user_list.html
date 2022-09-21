@@ -1,0 +1,93 @@
+{% extends 'studentskillsharing/base.html' %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a>Search Results</a></li>
+{% endblock %}
+
+{% block content %}
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Student</th>
+        <th>Student ID</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if user_filter %}
+      {% for prof in user_filter %}
+        <tr>
+         <td style="width:548px;word-wrap:break-word;">
+            <a href="{{ prof.get_absolute_url }}">{{ prof.first_name }} {{ prof.last_name }}</a>
+             <small class="text-muted d-block">{{ prof.get_skill_list }}</small>
+          </td>
+            <td>{% if prof.profile_showall is True %}{{ prof.username }}{% elif prof.profile_showmost is True %}{% if prof in followed_by %}{{ prof.username }}{% endif %}{% else %} Private {% endif %}</td>
+          <td class="align-middle">{% if prof.profile_showall is True %}{{ prof.email }}{% elif prof.profile_showmost is True %}{% if prof in followed_by %}{{ prof.email }}{% endif %}{% else %} Private {% endif %}</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+    {% else %}
+    <td class="align-middle">No profiles to show.</td>
+    {% endif %}
+    </tbody>
+  </table>
+
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Post</th>
+          <th>Author</th>
+        <th>Likes</th>
+        <th>Published On</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if post_filter %}
+      {% for post in post_filter %}
+        {% if post.author.posts_searchmost %}
+            {% if post.author in followed_by %}
+        <tr>
+         <td style="width:548px;word-wrap:break-word;">
+            <a href="{{ post.get_absolute_url }}">{{ post.post_title }}</a>
+            <small class="text-muted d-block">{{ post.post_text }}</small>
+          </td>
+            <td class="align-middle"><a href="{{ post.author.get_absolute_url }}"> {{ post.author.first_name}} {{ post.author.last_name }}</a></td>
+          <td class="align-middle">{{ post.num_likes }}</td>
+          <td class="align-middle">{{ post.date_published }}</td>
+          <td></td>
+        </tr>
+    {% endif %}
+    {% endif %}
+      {% endfor %}
+    {% else %}
+    <td class="align-middle">No posts to show.</td>
+    {% endif %}
+    </tbody>
+  </table>
+
+<table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Skill Match</th>
+          <th>Student ID</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if user_skill_filter %}
+      {% for prof in user_skill_filter %}
+        <tr>
+         <td style="width:548px;word-wrap:break-word">
+            <a href="{{ prof.get_absolute_url }}">{{ prof.first_name }} {{prof.last_name}}</a>
+            <small class="text-muted d-block">{{ prof.get_skill_list }}</small>
+          </td>
+            <td class="align-middle">{% if prof.profile_showall is True %}{{ prof.username }}{% elif prof.profile_showmost is True %}{% if prof in followed_by %}{{ prof.username }}{% endif %}{% else %} Private {% endif %}</td>
+          <td class="align-middle">{% if prof.profile_showall is True %}{{ prof.email }}{% elif prof.profile_showmost is True %}{% if prof in followed_by %}{{ prof.email }}{% endif %}{% else %} Private {% endif %}</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+    {% else %}
+    <td class="align-middle">No students with that skill.</td>
+    {% endif %}
+    </tbody>
+  </table>
+{% endblock %}

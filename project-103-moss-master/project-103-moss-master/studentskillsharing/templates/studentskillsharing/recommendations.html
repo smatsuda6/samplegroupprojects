@@ -1,0 +1,49 @@
+{% extends "studentskillsharing/base.html" %}
+
+{% block content %}
+<h5>Recommendations -- You'll have to follow profiles to see their posts. But you can always search for what you need later.</h5>
+
+<div class="card" style="margin-bottom: 20px;">
+
+{% if matching_profs %}
+    <div class="card-header">
+        Here are the profiles that match the skills that you selected:
+    </div>
+    {% for prof in matching_profs %}
+      <ul class="list-group list-group">
+        <li class="list-group-item">
+            <p>{{ prof.first_name }} {{ prof.last_name }}</p>
+
+            <button id ="recommendation{{forloop.counter}}" style="margin-left: 50rem;" data-profileid="{{prof.username}}" class="{% if prof in already_connected_match %}btn btn-success{%else%}btn btn-outline-success{%endif%}" type="button">
+            {% if prof in already_connected_match %}Unfollow{%else%}Follow{%endif%}
+            </button>
+
+            <p> <b id="followers{{forloop.counter}}">{{ prof.follower_count }} Followers</b></p>
+            <small class="text-muted d-block">{{ prof.get_skill_list }}</small>
+        </li>
+      </ul>
+    {% endfor %}
+{% elif backup_profs %}
+    <div class="card-header">
+        No matches yet? No worries! Here are some of the top profiles from around the site:
+    </div>
+    {% for prof in backup_profs %}
+    <ul class="list-group list-group">
+        <li class="list-group-item">
+            <p>{{ prof.first_name }} {{ prof.last_name }} ({{ prof.username}})</p>
+
+            <button id ="recommendation{{forloop.counter}}" style="margin-left: 50rem;" data-profileid="{{prof.username}}" class="{% if prof in already_connected_backup %}btn btn-success{%else%}btn btn-outline-success{%endif%}" type="button">
+            {% if prof in already_connected_backup %}Unfollow{%else%}Follow{%endif%}
+            </button>
+
+            <p> <b id="followers{{forloop.counter}}">{{ prof.follower_count }} Followers</b></p>
+            <small class="text-muted d-block">{{ prof.get_skill_list }}</small>
+        </li>
+      </ul>
+    {% endfor %}
+{% endif %}
+</div>
+
+<a class="btn btn-success" href="{% url 'posts' %}" style="margin-bottom:20px;">Go to your Timeline</a>
+
+{% endblock %}
